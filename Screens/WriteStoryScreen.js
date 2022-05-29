@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, KeyboardAvoidingView, TouchableOpacity, ToastAndroid} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import {Header} from 'react-native-elements';
 import db from '../config'
@@ -12,24 +12,26 @@ export default class WriteStoryScreen extends React.Component {
             title:"",
             author:"",
             storyText:""
-        }
-        submitStory=()=>{
-            db.collection("stories").add({
-                title:this.state.title,
-                author:this.state.author,
-                storyText:this.state.storyText
-            })
-            this.setState({
-                title:"",
-                author:"",
-                storyText:"",
-            })
-        }
+        }   
+    }
+    
+    submitStory=()=>{
+        db.collection("stories").add({
+            title:this.state.title,
+            author:this.state.author,
+            storyText:this.state.storyText
+        })
+        this.setState({
+            title:"",
+            author:"",
+            storyText:"",
+        })
+        ToastAndroid.show('Your story has been sumitted' , ToastAndroid.SHORT)
     }
 
     render(){
         return(
-            <View style ={{flex:1,justifyContent:"center",alignItems:"center"}}>
+            <KeyboardAvoidingView style ={{flex:1,justifyContent:"center",alignItems:"center"}}>
                 <Header 
                     centerComponent={{ text: 'StoryHub', style: { color: '#fff', fontSize: 20 }}}
                     backgroundColor={"purple"}
@@ -62,7 +64,7 @@ export default class WriteStoryScreen extends React.Component {
                     <Text style={styles.buttonText}>Submit</Text> 
                 </TouchableOpacity>
 
-            </View>
+            </KeyboardAvoidingView>
 
         )
     }
